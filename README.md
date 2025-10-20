@@ -9,7 +9,5 @@ This is my **Task 2** for the CodeAlpha Frontend Internship.
 - Keyboard support for easy typing
 - Styled user interface using HTML, CSS, and JavaScript
 
-## 🚀 How to Run
-- Download or clone the repository:
-  ```bash
-  git clone https://github.com/ricky123xx/CodeAlpha_Task2_Calculator.git
+## 🚀 Run
+ https://github.com/ricky123xx/CodeAlpha_Task2_Calculator.git](https://ricky123xx.github.io/calculator/)
