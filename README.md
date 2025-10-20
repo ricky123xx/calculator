@@ -10,4 +10,4 @@ This is my **Task 2** for the CodeAlpha Frontend Internship.
 - Styled user interface using HTML, CSS, and JavaScript
 
 ## 🚀 Run
-https://calculator-git-main-rickys-projects-f12d6b61.vercel.app
+https://calculator-kappa-seven-11.vercel.app/
