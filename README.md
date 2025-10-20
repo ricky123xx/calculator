@@ -10,4 +10,5 @@ This is my **Task 2** for the CodeAlpha Frontend Internship.
 - Styled user interface using HTML, CSS, and JavaScript
 
 ## 🚀 Run
- https://github.com/ricky123xx/CodeAlpha_Task2_Calculator.git](https://ricky123xx.github.io/calculator/)
+ https://ricky123xx.github.io/calculator/
+
