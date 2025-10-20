@@ -1,0 +1,1 @@
+- [x] Fix calculator to prevent multiple decimal points in a number
