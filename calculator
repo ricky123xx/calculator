@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <video autoplay muted loop id="background-video">
+        <source src="background-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h1><span>CALCULATOR</span></h1>
+    <div class="calculator">
+        <div class="display">
+            <input type="text" id="display" readonly>
+        </div>
+        <div class="buttons">
+            <button class="btn clear">C</button>
+            <button class="btn operator">±</button>
+            <button class="btn operator">%</button>
+            <button class="btn backspace">⌫</button>
+            <button class="btn number">7</button>
+            <button class="btn number">8</button>
+            <button class="btn number">9</button>
+            <button class="btn operator">/</button>
+            <button class="btn number">4</button>
+            <button class="btn number">5</button>
+            <button class="btn number">6</button>
+            <button class="btn operator">*</button>
+            <button class="btn number">1</button>
+            <button class="btn number">2</button>
+            <button class="btn number">3</button>
+            <button class="btn operator">-</button>
+            <button class="btn number zero">0</button>
+            <button class="btn number">.</button>
+            <button class="btn operator">+</button>
+            <button class="btn equal">=</button>
+        </div>
+    </div>
+    <p><span>Website developed by Ricky Sawarbandhe</span></p>
+    <script src="script.js"></script>
+</body>
+</html>
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #000000, #333333);
+    color: #fff;
+    overflow: hidden;
+}
+
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+}
+
+h1 span {
+    display: inline-block;
+    animation: glow 2s ease-in-out infinite alternate, type 3s steps(10, end) 1s both;
+}
+
+@keyframes type {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff9500;
+    }
+    to {
+        text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff9500;
+    }
+}
+
+.calculator {
+    background-color: #333;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 300px;
+}
+
+.display {
+    margin-bottom: 20px;
+}
+
+#display {
+    width: 100%;
+    height: 60px;
+    font-size: 24px;
+    text-align: right;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.btn.operator:nth-child(2) {
+    background-color: #a6a6a6;
+    color: #000;
+}
+
+.btn.operator:nth-child(3) {
+    background-color: #a6a6a6;
+    color: #302d2d;
+}
+
+.btn {
+    height: 60px;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.number {
+    background-color: #666;
+    color: #fff;
+}
+
+.operator {
+    background-color: #696269;
+    color: #fff;
+}
+
+.clear {
+    background-color: #a6a6a6;
+    color: #000;
+}
+
+.equal {
+    background-color: #ff9500;
+    color: #fff;
+    grid-column: span 2;
+}
+
+.zero {
+    grid-column: span 2;
+}
+
+.backspace {
+    background-color: #a6a6a6;
+    color: #000;
+}
+
+p {
+    margin-top: 20px;
+    font-size: 1.2em;
+    text-align: center;
+    color: #12d396;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    text-shadow: 0 0 10px #12d396, 0 0 20px #12d396, 0 0 30px #12d396;
+}
+
+p span {
+    display: inline-block;
+    animation: fadeIn 3s ease-in-out, typeP 4s steps(40, end) 1s both;
+}
+
+@keyframes typeP {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+const display = document.getElementById('display');
+let currentInput = '';
+let operator = '';
+let previousInput = '';
+let resultDisplayed = false;
+
+document.querySelectorAll('.btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const value = button.textContent;
+
+        if (button.classList.contains('number') || value === '.') {
+            if (resultDisplayed) {
+                currentInput = value;
+                resultDisplayed = false;
+            } else {
+                if (value === '.' && currentInput.includes('.')) {
+                    // Prevent multiple decimals
+                    return;
+                }
+                currentInput += value;
+            }
+            display.value = currentInput;
+        } else if (button.classList.contains('operator')) {
+            if (value === '±') {
+                if (currentInput !== '') {
+                    currentInput = (parseFloat(currentInput) * -1).toString();
+                    display.value = currentInput;
+                }
+            } else if (value === '%') {
+                if (currentInput !== '') {
+                    currentInput = (parseFloat(currentInput) / 100).toString();
+                    display.value = currentInput;
+                }
+            } else {
+                if (currentInput !== '') {
+                    if (previousInput !== '') {
+                        calculate();
+                    }
+                    operator = value;
+                    previousInput = currentInput;
+                    currentInput = '';
+                    resultDisplayed = false;
+                }
+            }
+        } else if (value === '=') {
+            if (currentInput !== '' && previousInput !== '' && operator !== '') {
+                calculate();
+                operator = '';
+                resultDisplayed = true;
+            }
+        } else if (value === 'C') {
+            clearDisplay();
+        } else if (value === '⌫') {
+            currentInput = currentInput.slice(0, -1);
+            display.value = currentInput;
+        }
+    });
+});
+
+function calculate() {
+    const prev = parseFloat(previousInput);
+    const current = parseFloat(currentInput);
+    let result;
+
+    switch (operator) {
+        case '+':
+            result = prev + current;
+            break;
+        case '-':
+            result = prev - current;
+            break;
+        case '*':
+            result = prev * current;
+            break;
+        case '/':
+            if (current !== 0) {
+                result = prev / current;
+            } else {
+                alert('Cannot divide by zero');
+                clearDisplay();
+                return;
+            }
+            break;
+        default:
+            return;
+    }
+
+    display.value = result;
+    currentInput = result.toString();
+    previousInput = '';
+}
+
+function clearDisplay() {
+    display.value = '';
+    currentInput = '';
+    operator = '';
+    previousInput = '';
+    resultDisplayed = false;
+}
+
+// Keyboard support
+document.addEventListener('keydown', (event) => {
+    const key = event.key;
+
+    if (key >= '0' && key <= '9') {
+        if (resultDisplayed) {
+            currentInput = key;
+            resultDisplayed = false;
+        } else {
+            currentInput += key;
+        }
+        display.value = currentInput;
+    } else if (key === '.') {
+        if (resultDisplayed) {
+            currentInput = key;
+            resultDisplayed = false;
+        } else {
+            if (currentInput.includes('.')) {
+                // Prevent multiple decimals
+                return;
+            }
+            currentInput += key;
+        }
+        display.value = currentInput;
+    } else if (['+', '-', '*', '/'].includes(key)) {
+        if (currentInput !== '') {
+            if (previousInput !== '') {
+                calculate();
+            }
+            operator = key;
+            previousInput = currentInput;
+            currentInput = '';
+            resultDisplayed = false;
+        }
+    } else if (key === 'Enter' || key === '=') {
+        if (currentInput !== '' && previousInput !== '' && operator !== '') {
+            calculate();
+            operator = '';
+            resultDisplayed = true;
+        }
+    } else if (key === 'Escape' || key === 'c' || key === 'C') {
+        clearDisplay();
+    } else if (key === 'Backspace') {
+        currentInput = currentInput.slice(0, -1);
+        display.value = currentInput;
+    }
+});
